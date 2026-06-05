@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sustentabilidade Tecnológica no Campo | Concurso Agrinho</title>
+    
+    <!-- Fontes Premium Globais -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #133527; 
+            --primary-light: #388659; 
+            --primary-soft: #f0f7f3;
+            --secondary: #c99359; 
+            --secondary-dark: #a06e38; 
+            --bg-main: #fbfbf9;
+            --surface: #ffffff; 
+            --surface-card: #ffffff; 
+            --text-main: #181d19;
+            --text-muted: #55645a; 
+            --border: #e6ebe7;
+            --font-display: 'Playfair Display', serif; 
+            --font-main: 'Lexend', sans-serif;
+            --base-font-size: 16px; 
+            --radius-lg: 20px; 
+            --radius-md: 14px; 
+            --radius-sm: 10px;
+            --shadow-premium: 0 15px 35px rgba(19, 53, 39, 0.04), 0 1px 2px rgba(0, 0, 0, 0.01);
+            --transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+            --danger: #ef4444;
+            --success: #22c55e;
+        }
+        
+        [data-theme="dark"] {
+            --bg-main: #090d0b; 
+            --surface: #111613; 
+            --surface-card: #171f1a;
+            --text-main: #eef3ef; 
+            --text-muted: #9bb0a2; 
+            --border: #232d26;
+            --primary: #4ec389; 
+            --primary-light: #72d4a4; 
+            --primary-soft: #143325;
+        }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { font-size: var(--base-font-size); scroll-behavior: smooth; }
+        body { 
+            font-family: var(--font-main); 
+            background-color: var(--bg-main); 
+            color: var(--text-main); 
+            line-height: 1.8; 
+            transition: background-color 0.3s, color 0.3s; 
+            overflow-x: hidden; 
+        }
+        
+        .scroll-progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: transparent;
+            z-index: 2000;
+        }
+        .scroll-progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary-light), var(--secondary));
+        }
+
+        .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        
+        .top-announcement { 
+            background: linear-gradient(90deg, #133527, #224d3a); 
+            color: #ffffff; 
+            text-align: center; 
+            padding: 12px 0; 
+            font-size: 0.8rem; 
+            font-weight: 700; 
+            letter-spacing: 2px; 
+            border-bottom: 2px solid var(--secondary); 
+            position: relative;
+            z-index: 1001;
+        }
+        
+        .main-navigation-bar { 
+            background-color: rgba(255, 255, 255, 0.85); 
+            backdrop-filter: blur(15px); 
+            -webkit-backdrop-filter: blur(15px); 
+            border-bottom: 1px solid var(--border); 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; 
+            padding: 14px 0; 
+            transition: var(--transition);
+        }
+        [data-theme="dark"] .main-navigation-bar { background-color: rgba(17, 22, 19, 0.85); }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; }
+        
+        .logo-wrapper { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text-main); }
+        .logo-text { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; }
+        .logo-text span { color: var(--secondary); font-style: italic; }
+        
+        .tabs-list { display: flex; list-style: none; gap: 2px; align-items: center; }
+        .tab-trigger-button { 
+            background: none; 
+            border: none; 
+            padding: 8px 14px; 
+            font-family: var(--font-main); 
+            font-size: 0.85rem; 
+            font-weight: 500; 
+            color: var(--text-muted); 
+            cursor: pointer; 
+            border-radius: var(--radius-sm); 
+            transition: var(--transition); 
+        }
+        .tab-trigger-button:hover { color: var(--primary); background-color: rgba(56, 134, 89, 0.06); }
+        .tab-trigger-button.active-tab-node { color: #133527; background-color: var(--primary-soft); font-weight: 600; }
+        [data-theme="dark"] .tab-trigger-button.active-tab-node { color: #ffffff; }
+        
+        .config-button-node { 
+            background-color: var(--surface); 
+            border: 1px solid var(--border); 
+            width: 38px; 
+            height: 38px; 
+            border-radius: 50%; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            transition: var(--transition); 
+            margin-left: 8px; 
+        }
+        
+        /* Painel Lateral */
+        .drawer-panel-node { position: fixed; top: 0; right: -380px; width: 380px; height: 100%; background-color: var(--surface); box-shadow: -15px 0 40px rgba(0,0,0,0.05); z-index: 3000; padding: 50px 30px; transition: cubic-bezier(0.25, 1, 0.5, 1) 0.4s; border-left: 1px solid var(--border); }
+        .drawer-panel-node.is-visible { right: 0; }
+        .panel-blur-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(19, 53, 39, 0.1); backdrop-filter: blur(3px); z-index: 2900; display: none; }
+        .drawer-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .drawer-header-flex h3 { font-family: var(--font-display); font-size: 1.5rem; }
+        .close-panel-trigger { background: none; border: none; font-size: 1.8rem; cursor: pointer; color: var(--text-muted); }
+        
+        .panel-setting-block { margin-bottom: 28px; }
+        .panel-setting-block label { display: block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-muted); margin-bottom: 10px; }
+        .setting-ui-select, .setting-ui-button { width: 100%; padding: 12px 16px; border-radius: var(--radius-sm); border: 1px solid var(--border); background-color: var(--bg-main); color: var(--text-main); font-family: var(--font-main); font-weight: 600; cursor: pointer; transition: var(--transition); text-align: left; }
+        
+        /* Seções de Conteúdo */
+        .tab-view-container { display: none; animation: viewFadeIn 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards; padding: 40px 0 80px 0; }
+        .tab-view-container.active-view-node { display: block; }
+        @keyframes viewFadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .editorial-hero { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 48px; align-items: center; margin-bottom: 60px; }
+        .editorial-hero h1 { font-family: var(--font-display); font-size: 2.8rem; line-height: 1.2; color: var(--primary); margin-bottom: 20px; }
+        [data-theme="dark"] .editorial-hero h1 { color: #ffffff; }
+        .editorial-hero p { font-size: 1.05rem; color: var(--text-muted); margin-bottom: 16px; text-align: justify; }
+        
+        /* Contêineres de Mídia (SVG embutido - À prova de falhas) */
+        .media-container { overflow: hidden; border-radius: var(--radius-lg); box-shadow: var(--shadow-premium); background-color: var(--primary-soft); position: relative; height: 420px; display: flex; align-items: center; justify-content: center; }
+        .media-container svg { width: 100%; height: 100%; object-fit: cover; }
+        
+        .section-center-head { text-align: center; max-width: 800px; margin: 0 auto 48px auto; }
+        .section-center-head h2 { font-family: var(--font-display); font-size: 2.2rem; color: var(--primary); margin-bottom: 12px; }
+        [data-theme="dark"] .section-center-head h2 { color: var(--primary-light); }
+        .section-center-head p { color: var(--text-muted); font-size: 1rem; }
+        
+        .grid-layout-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; margin-bottom: 60px; }
+        .grid-layout-3col { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+        
+        .pinterest-card { background-color: var(--surface-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 28px; box-shadow: var(--shadow-premium); transition: var(--transition); }
+        .pinterest-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(19, 53, 39, 0.06); }
+        
+        .pinterest-card-img-wrapper { overflow: hidden; border-radius: var(--radius-sm); margin-bottom: 18px; height: 180px; background-color: var(--primary-soft); display: flex; align-items: center; justify-content: center; }
+        .pinterest-card-img-wrapper svg { width: 100%; height: 100%; }
+        
+        .pinterest-card h3 { font-family: var(--font-display); font-size: 1.3rem; color: var(--primary); margin-bottom: 10px; }
+        [data-theme="dark"] .pinterest-card h3 { color: #ffffff; }
+        .pinterest-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; text-align: justify; }
+        
+        /* INTERFACE DE DADOS REAIS DO AGRO BRASILEIRO */
+        .dashboard-container { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 32px; box-shadow: var(--shadow-premium); margin: 30px 0; }
+        .dashboard-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px; }
+        .dashboard-title-box h3 { font-family: var(--font-display); font-size: 1.4rem; color: var(--primary); }
+        [data-theme="dark"] .dashboard-title-box h3 { color: white; }
+        .dashboard-title-box p { font-size: 0.85rem; color: var(--text-muted); }
+        
+        .sensor-btn { background-color: var(--primary); color: white; border: none; padding: 10px 20px; font-family: var(--font-main); font-size: 0.85rem; font-weight: 600; border-radius: var(--radius-sm); cursor: pointer; transition: var(--transition); display: flex; align-items: center; gap: 8px; }
+        .sensor-btn:hover { background-color: var(--primary-light); transform: translateY(-2px); }
+        
+        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+        .dashboard-metric-card { background: var(--bg-main); border: 1px solid var(--border); padding: 24px; border-radius: var(--radius-md); transition: var(--transition); }
+        .metric-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; color: var(--text-muted); font-size: 0.75rem; font-weight: 700; letter-spacing: 1px; }
+        .metric-value { font-size: 2.2rem; font-weight: 800; color: var(--primary); font-family: var(--font-main); transition: var(--transition); }
+        [data-theme="dark"] .metric-value { color: var(--primary-light); }
+        
+        .metric-bar-container { background: var(--border); height: 8px; border-radius: 4px; margin-top: 12px; overflow: hidden; }
+        .metric-bar-fill { height: 100%; background: linear-gradient(90deg, var(--primary-light), var(--secondary)); border-radius: 4px; width: 0%; transition: width 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
+        
+        .sensor-status-badge { display: inline-block; padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-top: 12px; }
+        .badge-success { background-color: rgba(34, 197, 94, 0.1); color: var(--success); }
+        .badge-danger { background-color: rgba(239, 64, 64, 0.1); color: var(--danger); }
+        
+        /* Linha do Tempo */
+        .timeline-wrapper { position: relative; max-width: 800px; margin: 0 auto; padding: 10px 0; }
+        .timeline-wrapper::before { content: ''; position: absolute; left: 20px; top: 0; width: 2px; height: 100%; background-color: var(--border); }
+        .timeline-node { position: relative; padding-left: 60px; margin-bottom: 40px; }
+        .timeline-marker { position: absolute; left: 11px; top: 6px; width: 20px; height: 20px; border-radius: 50%; background-color: var(--surface); border: 4px solid var(--primary-light); z-index: 2; }
+        .timeline-node h3 { font-family: var(--font-display); font-size: 1.3rem; margin-bottom: 8px; color: var(--primary); }
+        [data-theme="dark"] .timeline-node h3 { color: white; }
+        .timeline-node p { color: var(--text-muted); font-size: 0.95rem; text-align: justify; }
+        
+        .editorial-blockquote { background-color: var(--primary-soft); border-left: 3px solid var(--secondary); padding: 30px; border-radius: var(--radius-sm); font-family: var(--font-display); font-size: 1.25rem; font-style: italic; color: var(--primary); margin: 40px 0; text-align: center; }
+        [data-theme="dark"] .editorial-blockquote { background-color: #12241b; color: var(--primary-light); }
+        
+        .deep-dive-section { background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 36px; margin-top: 40px; }
+        .deep-dive-section h4 { font-family: var(--font-display); font-size: 1.4rem; color: var(--secondary-dark); margin-bottom: 14px; }
+        .deep-dive-section p { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 12px; text-align: justify; }
+
+        /* Módulo Quiz Premium (Estilo Quizizz Pro) */
+        .quiz-master-box { max-width: 750px; margin: 0 auto; background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 40px; box-shadow: var(--shadow-premium); }
+        .quiz-step-tracker { font-size: 0.75rem; font-weight: 700; color: var(--secondary-dark); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+        .quiz-streak-badge { background: linear-gradient(135deg, #ff4500, #ff8c00); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; display: none; animation: pulseStreak 1s infinite alternate; }
+        @keyframes pulseStreak { from { transform: scale(1); } to { transform: scale(1.05); } }
+        .quiz-core-question { font-family: var(--font-display); font-size: 1.5rem; color: var(--primary); margin-bottom: 24px; }
+        [data-theme="dark"] .quiz-core-question { color: #ffffff; }
+        
+        .quiz-interactive-option { width: 100%; padding: 16px 20px; background-color: var(--bg-main); border: 1px solid var(--border); border-radius: var(--radius-sm); text-align: left; font-family: var(--font-main); font-size: 0.9rem; font-weight: 500; color: var(--text-main); cursor: pointer; margin-bottom: 12px; transition: var(--transition); display: flex; align-items: center; gap: 12px; }
+        .quiz-interactive-option:hover { border-color: var(--primary-light); background-color: var(--surface); }
+        .quiz-interactive-option.node-correct { background-color: #dcfce7 !important; border-color: #22c55e !important; color: #14532d; font-weight: 600; }
+        .quiz-interactive-option.node-wrong { background-color: #fee2e2 !important; border-color: #ef4444 !important; color: #7f1d1d; }
+        
+        .quiz-response-feedback { padding: 18px; border-radius: var(--radius-sm); margin: 20px 0; display: none; font-size: 0.9rem; }
+        .quiz-response-feedback.positive { background-color: rgba(34, 197, 94, 0.05); color: #14532d; border-left: 3px solid #22c55e; }
+        .quiz-response-feedback.negative { background-color: rgba(239, 64, 64, 0.05); color: #7f1d1d; border-left: 3px solid #ef4444; }
+        
+        .quiz-action-trigger { background-color: #133527; color: white; border: none; padding: 12px 28px; border-radius: var(--radius-sm); font-family: var(--font-main); font-size: 0.9rem; font-weight: 600; cursor: pointer; float: right; transition: var(--transition); }
+        .quiz-action-trigger:hover { background-color: var(--primary-light); }
+        
+        /* Perfil Autor */
+        .profile-layout { display: grid; grid-template-columns: 0.75fr 1.25fr; gap: 48px; align-items: center; }
+        .profile-avatar-wrapper { overflow: hidden; border-radius: var(--radius-lg); box-shadow: var(--shadow-premium); background-color: var(--primary-soft); height: 380px; display: flex; align-items: center; justify-content: center; }
+        .profile-badge { background-color: var(--secondary); color: white; padding: 6px 12px; border-radius: 30px; font-size: 0.7 hydrodynamic-rem; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-bottom: 16px; }
+        
+        /* Rodapé Polido */
+        .site-footer-node { background-color: #0c100d; color: #7b8a80; padding: 48px 0 32px 0; font-size: 0.85rem; border-top: 1px solid var(--border); margin-top: 60px; }
+        .footer-flex-row { display: flex; justify-content: space-between; align-items: center; padding-bottom: 24px; border-bottom: 1px solid #1a221d; margin-bottom: 24px; }
+        .footer-brand-title { font-family: var(--font-display); font-size: 1.3rem; color: #ffffff; }
+
+        /* Modo Imersivo Avançado */
+        body.immersive-mode .top-announcement, 
+        body.immersive-mode .site-footer-node,
+        body.immersive-mode .dashboard-container { display: none !important; }
+
+        @media (max-width: 992px) {
+            .editorial-hero, .grid-layout-2col, .profile-layout, .footer-flex-row { grid-template-columns: 1fr; text-align: center; gap: 32px; }
+            .tabs-list { display: none; }
+            .media-container, .profile-avatar-wrapper { height: 300px; }
+            .quiz-action-trigger { float: none; margin: 0 auto; width: 100%; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="scroll-progress-container"><div class="scroll-progress-bar" id="reading-progress"></div></div>
+
+    <div class="top-announcement">
+        <span data-localize="top_banner">PROJETO CIENTÍFICO E TECNOLÓGICO — CONCURSO AGRINHO 2026</span>
+    </div>
+
+    <!-- Painel de Customização -->
+    <div class="panel-blur-overlay" id="blur-overlay" onclick="closeAccessibilityDrawer()"></div>
+    <div class="drawer-panel-node" id="accessibility-drawer">
+        <div class="drawer-header-flex">
+            <h3 id="drawer-title" data-localize="drawer_head">Preferências</h3>
+            <button class="close-panel-trigger" onclick="closeAccessibilityDrawer()">&times;</button>
+        </div>
+        <div class="panel-setting-block">
+            <label data-localize="lbl_lang">Idioma do Portal</label>
+            <select class="setting-ui-select" id="locale-selector" onchange="applyGlobalTranslation()">
+                <option value="pt">Português (BR)</option>
+                <option value="en">English (US)</option>
+                <option value="es">Español (ES)</option>
+            </select>
+        </div>
+        <div class="panel-setting-block">
+            <label data-localize="lbl_theme">Painel Visual</label>
+            <button class="setting-ui-button" onclick="executeThemeToggle()" data-localize="btn_theme">Alternar Modo Claro / Escuro</button>
+        </div>
+        <div class="panel-setting-block">
+            <label>Modo de Foco Imersivo</label>
+            <button class="setting-ui-button" onclick="toggleImmersiveMode()">Ativar / Desativar Foco</button>
+        </div>
+        <div class="panel-setting-block">
+            <label data-localize="lbl_font">Escala de Leitura</label>
+            <div style="display: flex; gap: 8px;">
+                <button class="setting-ui-button" style="text-align:center;" onclick="modifyTextScale(1)">A+</button>
+                <button class="setting-ui-button" style="text-align:center;" onclick="modifyTextScale(-1)">A-</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Menu Superior -->
+    <header class="main-navigation-bar">
+        <div class="container nav-container">
+            <a href="#" class="logo-wrapper" onclick="executeTabSwitch('view-intro')">
+                <svg width="30" height="30" viewBox="0 0 40 40" fill="none">
+                    <rect width="40" height="40" rx="10" fill="#133527"/>
+                    <path d="M20 10C14 16 12 22 20 30C28 22 26 16 20 10Z" fill="#c99359"/>
+                </svg>
+                <div class="logo-text">Agrinho<span>2026</span></div>
+            </a>
+            <nav>
+                <ul class="tabs-list">
+                    <li><button class="tab-trigger-button active-tab-node" id="btn-view-intro" onclick="executeTabSwitch('view-intro')" data-localize="nav_intro">Introdução</button></li>
+                    <li><button class="tab-trigger-button" id="btn-view-project" onclick="executeTabSwitch('view-project')" data-localize="nav_agrinho">O Projeto</button></li>
+                    <li><button class="tab-trigger-button" id="btn-view-history" onclick="executeTabSwitch('view-history')" data-localize="nav_hist">História & Evolução</button></li>
+                    <li><button class="tab-trigger-button" id="btn-view-global" onclick="executeTabSwitch('view-global')" data-localize="nav_world">Segurança Mundial</button></li>
+                    <li><button class="tab-trigger-button" id="btn-view-practices" onclick="executeTabSwitch('view-practices')" data-localize="nav_sust">Práticas de Cultivo</button></li>
+                    <li><button class="tab-trigger-button" id="btn-view-quiz" onclick="executeTabSwitch('view-quiz')" data-localize="nav_quiz">Desafio Escolar</button></li>
+                    <li><button class="tab-trigger-button" id="btn-view-author" onclick="executeTabSwitch('view-author')" data-localize="nav_about_me">Sobre Mim</button></li>
+                    <li><button class="config-button-node" onclick="openAccessibilityDrawer()">⚙️</button></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- ABA 1: INTRODUÇÃO -->
+        <section class="tab-view-container active-view-node" id="view-intro">
+            <div class="editorial-hero">
+                <div class="hero-text">
+                    <h1 data-localize="intro_title">Agro Forte, Futuro Sustentável: Equilíbrio entre Produção e Meio Ambiente</h1>
+                    <p data-localize="intro_p1">Abastecer de forma segura uma civilização que se aproxima de 10 bilhões de habitantes até a metade do século, sem comprometer os biomas e as reservas hídricas finitas do planeta, é o maior desafio técnico da história recente. O manejo inteligente do campo requer rigor analítico, onde a tecnologia apoia a preservação ambiental direta.</p>
+                    <p data-localize="intro_p2">Através de plataformas computacionais integradas e estudos agronômicos de ponta, a agricultura contemporânea deixa de ser puramente extrativista e passa a atuar como uma aliada estratégica da biodiversidade global, otimizando o uso do solo e poupando florestas nativas.</p>
+                </div>
+                <!-- Imagem Vetorial Robusta: Campo Tecnológico -->
+                <div class="media-container">
+                    <svg viewBox="0 0 800 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="800" height="500" fill="#f0f7f3"/>
+                        <path d="M0 350Q200 300 400 380T800 320V500H0V350Z" fill="#388659"/>
+                        <path d="M0 400Q300 360 500 440T800 390V500H0V400Z" fill="#133527"/>
+                        <circle cx="400" cy="180" r="40" stroke="#c99359" stroke-width="3" stroke-dasharray="6 6"/>
+                        <line x1="400" y1="220" x2="400" y2="350" stroke="#c99359" stroke-width="2"/>
+                        <path d="M380 350H420" stroke="#c99359" stroke-width="4"/>
+                        <circle cx="400" cy="180" r="8" fill="#c99359"/>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- PAINEL DE DADOS OFICIAIS DO AGRO SUSTENTÁVEL (DADOS 100% REAIS E CIENTÍFICOS) -->
+            <div class="dashboard-container">
+                <div class="dashboard-controls">
+                    <div class="dashboard-title-box">
+                        <h3 id="dash-main-title">Painel de Indicadores Históricos e Metas REAIS</h3>
+                        <p id="dash-sub-title">Dados de produção e preservação validados por órgãos oficiais (Embrapa/IBGE/FAO).</p>
+                    </div>
+                    <button class="sensor-btn" onclick="toggleHistoricalDataYear()">
+                        📊 <span id="dash-btn-text">Alternar Ano Balanço (2020 / 2026)</span>
+                    </button>
+                </div>
+                
+                <div class="dashboard-grid">
+                    <div class="dashboard-metric-card">
+                        <div class="metric-header"><span id="lbl-h1">ÁREA INTEGRADA (ILPF)</span><span>EMBRAPA COOP</span></div>
+                        <div class="metric-value" id="val-humidity">17.4M ha</div>
+                        <div class="metric-bar-container"><div class="metric-bar-fill" id="bar-humidity" style="width: 87%"></div></div>
+                        <div class="sensor-status-badge badge-success" id="status-humidity">Meta de Expansão ABC+</div>
+                    </div>
+                    <div class="dashboard-metric-card">
+                        <div class="metric-header"><span id="lbl-h2">CONTROLE BIOLÓGICO</span><span>Manejo Integrado</span></div>
+                        <div class="metric-value" id="val-water">55%</div>
+                        <div class="metric-bar-container"><div class="metric-bar-fill" id="bar-water" style="width: 55%"></div></div>
+                        <div class="sensor-status-badge badge-success" id="status-water">Liderança Global</div>
+                    </div>
+                    <div class="dashboard-metric-card">
+                        <div class="metric-header"><span id="lbl-h3">DESPERDÍCIO DA CADEIA</span><span>Métrica ONU/FAO</span></div>
+                        <div class="metric-value" id="val-yield">33.3%</div>
+                        <div class="metric-bar-container"><div class="metric-bar-fill" id="bar-yield" style="width: 33.3%"></div></div>
+                        <div class="sensor-status-badge badge-danger" id="status-yield">Alvo de Redução ODS</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section-center-head" style="margin-top: 60px;">
+                <h2 data-localize="intro_sub_h2">Monitoramento de Recursos e Impacto Mitigado</h2>
+                <p data-localize="intro_sub_p">Abaixo, veja os três pilares que regem a modernização do campo sob a ótica da sustentabilidade e das ciências exatas.</p>
+            </div>
+            
+            <div class="grid-layout-3col">
+                <div class="pinterest-card">
+                    <div class="pinterest-card-img-wrapper">
+                        <svg viewBox="0 0 300 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="300" height="180" fill="#e8f2ec"/>
+                            <path d="M50 140H250M90 140V90M150 140V60M210 140V110" stroke="#133527" stroke-width="4" stroke-linecap="round"/>
+                            <circle cx="150" cy="60" r="6" fill="#c99359"/>
+                        </svg>
+                    </div>
+                    <h3 data-localize="card1_h3">Análise Geométrica do Solo</h3>
+                    <p data-localize="card1_p">O mapeamento mineral preciso identifica falhas nutricionais em talhões específicos. Isso permite uma correção cirúrgica por coordenadas geográficas, impedindo a lixiviação química e resguardando aquíferos de contaminações indesejadas.</p>
+                </div>
+                <div class="pinterest-card">
+                    <div class="pinterest-card-img-wrapper">
+                        <svg viewBox="0 0 300 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="300" height="180" fill="#e8f2ec"/>
+                            <path d="M150 40C110 80 110 110 150 150C190 110 190 80 150 40Z" fill="#388659" opacity="0.3"/>
+                            <path d="M150 70C130 100 130 120 150 145C170 120 170 100 150 70Z" fill="#388659"/>
+                        </svg>
+                    </div>
+                    <h3 data-localize="card2_h3">Governança Hídrica Otimizada</h3>
+                    <p data-localize="card2_p">Sistemas avançados calculam os índices exatos de necessidade d'água nas raízes vegetais. Essa tecnologia reduz drasticamente o bombeamento desnecessário, conservando bilhões de litros de água potável no ecossistema regional.</p>
+                </div>
+                <div class="pinterest-card">
+                    <div class="pinterest-card-img-wrapper">
+                        <svg viewBox="0 0 300 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="300" height="180" fill="#e8f2ec"/>
+                            <circle cx="150" cy="90" r="35" stroke="#133527" stroke-width="3"/>
+                            <path d="M120 90H180M150 60V120" stroke="#c99359" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h3 data-localize="card3_h3">Engenharia de Dados no Campo</h3>
+                    <p data-localize="card3_p">A captura contínua de telemetria prediz comportamentos climáticos e proliferações biológicas perigosas. A tomada de decisão apoiada em algoritmos elimina ações em massa nocivas ao meio ambiente local.</p>
+                </div>
+            </div>
+
+            <div class="deep-dive-section">
+                <h4 data-localize="dive_intro_h4">Aprofundamento Técnico: O Papel dos Algoritmos de Precisão</h4>
+                <p data-localize="dive_intro_p">A modelagem matemática aplicada à agronomia contemporânea permite rodar equações complexas de balanço de nitrogênio na terra. Ao cruzar taxas de radiação solar refletida pelas folhas com índices históricos de chuva, sistemas profissionais evitam desperdícios logísticos, provando que o código limpo reduz de forma mensurável as emissões de gases poluentes na atmosfera.</p>
+            </div>
+        </section>
+
+        <!-- ABA 2: O PROJETO -->
+        <section class="tab-view-container" id="view-project">
+            <div class="section-center-head">
+                <h2 data-localize="agr_title">Cultivando Saber, Colhendo Futuro</h2>
+                <p data-localize="agr_subtitle">Uma iniciativa focada em transformar a educação ambiental e aproximar a ciência do cotidiano escolar.</p>
+            </div>
+            <div class="grid-layout-2col">
+                <div class="media-container">
+                    <svg viewBox="0 0 800 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="800" height="500" fill="#fcf8f2"/>
+                        <path d="M100 400H700M200 400V300C200 250 250 200 350 200V400M450 400V250C450 200 500 150 600 150V400" stroke="#133527" stroke-width="5" stroke-linecap="round"/>
+                        <circle cx="350" cy="200" r="12" fill="#c99359"/>
+                        <circle cx="600" cy="150" r="12" fill="#c99359"/>
+                    </svg>
+                </div>
+                <div>
+                    <h3 style="font-family: var(--font-display); font-size: 1.6rem; margin-bottom: 16px; color: var(--primary);" data-localize="agr_h3">Educação Crítica e Pensamento Científico</h3>
+                    <p style="margin-bottom: 14px; color: var(--text-muted); text-align: justify;" data-localize="agr_p1">O Programa Agrinho atua como um agente de transformação ao incentivar a juventude no desenvolvimento da pesquisa autônoma. Ele rompe a barreira teórica das salas de aula clássicas, instigando o entendimento holístico das cadeias logísticas internacionais e das dinâmicas ecológicas complexas.</p>
+                    <p style="color: var(--text-muted); text-align: justify;" data-localize="agr_p2">Ao associar biologia, sustentabilidade e lógica, o programa prepara os cidadãos do amanhã para propor soluções viáveis e mensuráveis, respeitando as leis ecológicas e a integridade da biodiversidade que sustenta o planeta.</p>
+                </div>
+            </div>
+            <div class="editorial-blockquote" data-localize="agr_quote">
+                "Consolidar o aprendizado científico focado no meio ambiente é dar ferramentas para as novas generations gerenciarem o ecossistema com responsabilidade técnica e equilíbrio."
+            </div>
+        </section>
+
+        <!-- ABA 3: HISTÓRIA & EVOLUÇÃO -->
+        <section class="tab-view-container" id="view-history">
+            <div class="section-center-head">
+                <h2 data-localize="hist_title">A Evolução Histórica da Produção</h2>
+                <p data-localize="hist_subtitle">O percurso das civilizações: da dependência climática absoluta ao controle tecnológico sustentável.</p>
+            </div>
+            <div class="timeline-wrapper">
+                <div class="timeline-node">
+                    <div class="timeline-marker"></div>
+                    <h3 data-localize="time1_h3">Fase Empírica: A Subsistência Primitiva</h3>
+                    <p data-localize="time1_p">Durante milênios, o cultivo humano dependia exclusivamente do trabalho braçal severo e de dinâmicas climáticas imprevisíveis. A escassez crônica de nutrientes no solo resultava em colheitas limitadas e crises de abastecimento constantes que afetavam sociedades inteiras.</p>
+                </div>
+                <div class="timeline-node">
+                    <div class="timeline-marker"></div>
+                    <h3 data-localize="time2_h3">Século XX: Mecanização Estrutural</h3>
+                    <p data-localize="time2_p">A expansão dos motores a combustão e o desenvolvimento de insumos em escala industrial elevaram consideravelmente a produção global por hectare. Essa aceleração afastou o fantasma da fome em diversas regiões, mas gerou impactos severos de degradação do solo que hoje precisam ser sanados.</p>
+                </div>
+                <div class="timeline-node">
+                    <div class="timeline-marker"></div>
+                    <h3 data-localize="time3_h3">Hoje: Agricultura 5.0 e Consciência Ecológica</h3>
+                    <p data-localize="time3_p">O paradigma atual une engenharia genética limpa, monitoramento via satélite e bioinsumos regenerativos. O objetivo contemporâneo não é expandir áreas territoriais desmatando florestas, mas sim obter a máxima eficiência métrica preservando integralmente o patrimônio natural nativo.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABA 4: SEGURANÇA MUNDIAL -->
+        <section class="tab-view-container" id="view-global">
+            <div class="section-center-head">
+                <h2 data-localize="global_title">Cenário Geopolítico e Diretrizes da ONU</h2>
+                <p data-localize="global_subtitle">Evidências e metas globais estabelecidas pelas principais agências internacionais de pesquisa e abastecimento.</p>
+            </div>
+            <div class="grid-layout-2col">
+                <div>
+                    <h3 style="font-family: var(--font-display); font-size: 1.6rem; margin-bottom: 16px; color: var(--primary);" data-localize="global_h3">Combate ao Desperdício Estrutural</h3>
+                    <p style="margin-bottom: 14px; color: var(--text-muted); text-align: justify;" data-localize="global_p1">Estudos oficiais publicados pela Organização das Nações Unidas para a Alimentação e a Agricultura (FAO) apontam que um terço dos alimentos produzidos no globo se perde antes de chegar ao prato do consumidor final devido a falhas de armazenamento e transporte. A correção desses gargalos logísticos evitaria a necessidade de abertura de novas áreas de cultivo.</p>
+                    <p style="color: var(--text-muted); text-align: justify;" data-localize="global_p2">Em consonância com as Metas de Desenvolvimento Sustentável (ODS) da ONU, cientistas utilizam análise preditiva de dados para desenvolver variantes vegetais resistentes a estresses hídricos extremos, permitindo colheitas seguras mesmo em zonas semiáridas, diminuindo pressões ecológicas.</p>
+                </div>
+                <div class="media-container">
+                    <svg viewBox="0 0 800 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="800" height="500" fill="#fbfbf9"/>
+                        <circle cx="400" cy="250" r="160" stroke="#388659" stroke-width="2" stroke-dasharray="10 5"/>
+                        <path d="M280 250C280 180 340 150 400 150C460 150 520 180 520 250" stroke="#133527" stroke-width="6"/>
+                        <path d="M320 280H480" stroke="#c99359" stroke-width="4"/>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="deep-dive-section">
+                <h4 data-localize="dive_global_h4">Estatísticas Oficiais da FAO e Painéis Climáticos</h4>
+                <p data-localize="dive_global_p">Os relatórios emitidos pela ONU alertam que a degradação do solo induzida pela agricultura negligente do século passado gera um prejuízo trilionário à economia verde. A transição para um modelo puramente baseado em dados e sustentabilidade reduz as emissões agrícolas em até 40%, cumprindo de forma direta o Acordo de Paris sem reduzir a oferta interna de grãos.</p>
+            </div>
+        </section>
+
+        <!-- ABA 5: PRÁTICAS DE CULTIVO -->
+        <section class="tab-view-container" id="view-practices">
+            <div class="section-center-head">
+                <h2 data-localize="prac_title">Práticas de Manejo Técnico Conservacionista</h2>
+                <p data-localize="prac_subtitle">Metodologias consagradas por órgãos de excelência como a Embrapa para a conservação biológica do solo.</p>
+            </div>
+            <div class="grid-layout-3col">
+                <div class="pinterest-card">
+                    <div style="font-size: 2rem; margin-bottom: 12px;">🌱</div>
+                    <h3 data-localize="prac_c1_title">Plantio Direto na Palha</h3>
+                    <p data-localize="prac_c1_desc">A sementeira ocorre sem a aração convencional. A palhada remanescente da safra anterior funciona como um escudo térmico natural, reduzindo a evaporação d'água, retendo a umidade ideal e fixando carbono na estrutura interna do solo de forma permanente.</p>
+                </div>
+                <div class="pinterest-card">
+                    <div style="font-size: 2rem; margin-bottom: 12px;">🔄</div>
+                    <h3 data-localize="prac_c2_title">Rotação Estruturada de Culturas</h3>
+                    <p data-localize="prac_c2_desc">A alternância de famílias botânicas quebra os ciclos de proliferação de pragas sem demandar intervenções químicas contínuas. Além disso, espécies específicas realizam a reposição natural de nitrogênio na terra, regenerando a microbiota local de forma limpa.</p>
+                </div>
+                <div class="pinterest-card">
+                    <div style="font-size: 2rem; margin-bottom: 12px;">🌾</div>
+                    <h3 data-localize="prac_c3_title">Manejo Biológico Integrado</h3>
+                    <p data-localize="prac_c3_desc">Emprega bioinsumos e microrganismos protetores para regular ameaças de cultivo. Esta metodologia protege populações de polinizadores silvestres indispensáveis e diminui severamente a dependência de elementos químicos industriais de alta toxicidade.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABA 6: DESAFIO ESCOLAR -->
+        <section class="tab-view-container" id="view-quiz">
+            <div class="section-center-head">
+                <h2 data-localize="quiz_title">Desafio do Conhecimento Agroambiental</h2>
+                <p data-localize="quiz_subtitle">Consolide os principais conceitos científicos abordados através de uma interface interativa de testes.</p>
+            </div>
+            <div class="quiz-master-box" id="quiz-box-wrapper"></div>
+        </section>
+
+        <!-- ABA 7: SOBRE MIM -->
+        <section class="tab-view-container" id="view-author">
+            <div class="profile-layout">
+                <div class="profile-avatar-wrapper">
+                    <svg viewBox="0 0 400 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="400" height="380" fill="#133527"/>
+                        <circle cx="200" cy="150" r="60" fill="#c99359"/>
+                        <path d="M100 320C100 260 140 230 200 230C260 230 300 260 300 320V350H100V320Z" fill="#388659"/>
+                    </svg>
+                </div>
+                <div>
+                    <span class="profile-badge" data-localize="me_badge">Autora do Projeto</span>
+                    <h2>Fernanda Mackievicz</h2>
+                    <p style="font-size: 1.05rem; color: var(--text-muted); margin-top: 14px; margin-bottom: 14px; text-align: justify;" data-localize="me_p1">Estudante focada no campo das ciências exatas e no estudo aplicado da tecnologia. Tenho como convicção que o desenvolvimento de algoritmos estruturados e o raciocínio matemático lógico não devem se limitar a softwares abstratos, mas sim servir como alicerce real para mitigar complexidades urgentes da nossa sociedade e da preservação dos biomas.</p>
+                    <p style="font-size: 1.05rem; color: var(--text-muted); text-align: justify;" data-localize="me_p2">Este portal representa a convergência entre essas frentes: o uso da precisão informático-computacional direcionado à otimização ecológica, comprovando de forma clara que a inovação tecnológica e o respeito irrestrito ao equilíbrio botânico e à biodiversidade compõem a única via sustentável para o desenvolvimento social.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer-node">
+        <div class="container">
+            <div class="footer-flex-row">
+                <div>
+                    <h3 class="footer-brand-title">🌱 Portal Agrinho 2026</h3>
+                    <p style="max-width: 550px; margin-top: 8px; font-size: 0.8rem; line-height: 1.6;" data-localize="foot_desc">Desenvolvimento conceitual e analítico estruturado especificamente para a participação no Concurso Agrinho. Todas as informações bibliográficas e estatísticas estão em conformidade com as diretrizes da FAO/ONU e agências oficiais de pesquisa.</p>
+                </div>
+                <div style="text-align: right;">
+                    <p style="font-size: 0.8rem; margin-top: 2px;" data-localize="foot_year">Ano Base do Estudo: 2026</p>
+                </div>
+            </div>
+            <div style="text-align: center; font-size: 0.75rem; opacity: 0.4;">
+                <p>&copy; 2026 Agrinho Concurso. Curadoria Científica e Engenharia Web por Fernanda Mackievicz.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Dicionário de Traduções Absoluto
+        const translationDictionary = {
+            pt: {
+                top_banner: "PROJETO CIENTÍFICO E TECNOLÓGICO — CONCURSO AGRINHO 2026",
+                drawer_head: "Preferências", lbl_lang: "Idioma do Portal", lbl_theme: "Painel Visual",
+                btn_theme: "Alternar Modo Claro / Escuro", lbl_font: "Escala de Leitura",
+                nav_intro: "Introdução", nav_agrinho: "O Projeto", nav_hist: "História & Evolução",
+                nav_world: "Segurança Mundial", nav_sust: "Práticas de Cultivo", nav_quiz: "Desafio Escolar",
+                nav_about_me: "Sobre Mim", quiz_title: "Desafio do Conhecimento Agroambiental",
+                quiz_subtitle: "Consolide os principais conceitos científicos abordados através de uma interface interativa de testes.",
+                quiz_btn_next: "Avançar &rarr;", quiz_btn_start: "Iniciar o Desafio Interativo",
+                quiz_welcome_title: "Bem-vindo ao Módulo AgroQuiz!",
+                quiz_welcome_desc: "Avaliação profissional de 5 etapas desenvolvida para testar competências acerca de agricultura de precisão, sustentabilidade e metas ecológicas da ONU.",
+                intro_title: "Agro Forte, Futuro Sustentável: Equilíbrio entre Produção e Meio Ambiente",
+                intro_p1: "Abastecer de forma segura uma civilização que se aproxima de 10 bilhões de habitantes até a metade do século, sem comprometer os biomas e as reservas hídricas finitas do planeta, é o maior desafio técnico da história recente. O manejo inteligente do campo requer rigor analítico, onde a tecnologia apoia a preservação ambiental direta.",
+                intro_p2: "Através de plataformas computacionais integradas e estudos agronômicos de ponta, a agricultura contemporânea deixa de ser puramente extrativista e passa a atuar como uma aliada estratégica da biodiversidade global, otimizando o uso do solo e poupando florestas nativas.",
+                intro_sub_h2: "Monitoramento de Recursos e Impacto Mitigado",
+                intro_sub_p: "Abaixo, veja os três pilares que regem a modernização do campo sob a ótica da sustentabilidade e das ciências exatas.",
+                card1_h3: "Análise Geométrica do Solo", card1_p: "O mapeamento mineral preciso identifica falhas nutricionais em talhões específicos. Isso permite uma correção cirúrgica por coordenadas geográficas, impedindo a lixiviação química e resguardando aquíferos de contaminações indesejadas.",
+                card2_h3: "Governança Hídrica Otimizada", card2_p: "Sistemas avançados calculam os índices exatos de necessidade d'água nas raízes vegetais. Essa tecnologia reduz drasticamente o bombeamento desnecessário, conservando bilhões de litros de água potável no ecossistema regional.",
+                card3_h3: "Engenharia de Dados no Campo", card3_p: "A captura contínua de telemetria prediz comportamentos climáticos e proliferações biológicas perigosas. A tomada de decisão apoiada em algoritmos elimina ações em massa nocivas ao meio ambiente local.",
+                dive_intro_h4: "Aprofundamento Técnico: O Papel dos Algoritmos de Precisão",
+                dive_intro_p: "A modelagem matemática aplicada à agronomia contemporânea permite rodar equações complexas de balanço de nitrogênio na terra. Ao cruzar taxas de radiação solar refletida pelas folhas com índices históricos de chuva, sistemas profissionais evitam desperdícios logísticos, provando que o código limpo reduz de forma mensurável as emissões de gases poluentes na atmosfera.",
+                agr_title: "Cultivando Saber, Colhendo Futuro", agr_subtitle: "Uma iniciativa focada em transformar a educação ambiental e aproximar a ciência do cotidiano escolar.",
+                agr_h3: "Educação Crítica e Pensamento Científico", agr_p1: "O Programa Agrinho atua como um agente de transformação ao incentivar a juventude no desenvolvimento da pesquisa autônoma. Ele rompe a barreira teórica das salas de aula clássicas, instigando o entendimento holístico das cadeias logísticas internacionais e das dinâmicas ecológicas complexas.",
+                agr_p2: "Ao associar biologia, sustentabilidade e lógica, o programa prepara os cidadãos do amanhã para proposing soluções viáveis e mensuráveis, respeitando as leis ecológicas e a integridade da biodiversidade que sustenta o planeta.",
+                agr_quote: '"Consolidar o aprendizado científico focado no meio ambiente é dar ferramentas para as novas gerações gerenciarem o ecossistema com responsabilidade técnica e equilíbrio."',
+                hist_title: "A Evolução Histórica da Produção", hist_subtitle: "O percurso das civilizações: da dependência climática absoluta ao controle tecnológico sustentável.",
+                time1_h3: "Fase Empírica: A Subsistência Primitiva", time1_p: "Durante milênios, o cultivo humano dependia exclusivamente do trabalho braçal severo e de dinâmicas climáticas imprevisíveis. A escassez crônica de nutrientes no solo resultava em colheitas limitadas e crises de abastecimento constantes que afetavam sociedades inteiras.",
+                time2_h3: "Século XX: Mecanização Estrutural", time2_p: "A expansão dos motores a combustão e o desenvolvimento de insumos em escala industrial elevaram consideravelmente a produção global por hectare. Essa aceleração afastou o fantasma da fome em diversas regiões, mas gerou impactos severos de degradação do solo que hoje precisam ser sanados.",
+                time3_h3: "Hoje: Agricultura 5.0 e Consciência Ecológica", time3_p: "O paradigma atual une engenharia genética limpa, monitoramento via satélite e bioinsumos regenerativos. O objetivo contemporâneo não é expandir áreas territoriais desmatando florestas, mas sim obter a máxima eficiência métrica preservando integralmente o patrimônio natural nativo.",
+                global_title: "Cenário Geopolítico e Diretrizes da ONU", global_subtitle: "Evidências e metas globais estabelecidas pelas principais agências internacionais de pesquisa e abastecimento.",
+                global_h3: "Combate ao Desperdício Estrutural", global_p1: "Estudos oficiais publicados pela Organização das Nações Unidas para a Alimentação e a Agricultura (FAO) apontam que um terço dos alimentos produzidos no globo se perde antes de chegar ao prato do consumidor final devido a falhas de armazenamento e transporte. A correção desses gargalos logísticos evitaria a necessidade de abertura de novas áreas de cultivo.",
+                global_p2: "Em consonância com as Metas de Desenvolvimento Sustentável (ODS) da ONU, cientistas utilizam análise preditiva de dados para desenvolver variantes vegetais resistentes a estresses hídricos extremos, permitindo colheitas seguras mesmo em zonas semiáridas, diminuindo pressões ecológicas.",
+                dive_global_h4: "Estatísticas Oficiais da FAO e Painéis Climáticos",
+                dive_global_p: "Os relatórios emitidos pela ONU alertam que a degradação do solo induzida pela agricultura negligente do século passado gera um prejuízo trilionário à economia verde. A transição para um modelo puramente baseado em dados e sustentabilidade reduz as emissões agrícolas em até 40%, cumprindo de forma direta o Acordo de Paris sem reduzir a oferta interna de grãos.",
+                prac_title: "Práticas de Manejo Técnico Conservacionista", prac_subtitle: "Metodologias consagradas por órgãos de excelência como a Embrapa para a conservação biológica do solo.",
+                prac_c1_title: "Plantio Direto na Palha", prac_c1_desc: "A sementeira ocorre sem a aração convencional. A palhada remanescente da safra anterior funciona como um escudo térmico natural, reduzindo a evaporação d'água, retendo a umidade ideal e fixando carbono na estrutura interna do solo de forma permanente.",
+                prac_c2_title: "Rotação Estruturada de Culturas", prac_c2_desc: "A alternância de famílias botânicas quebra os ciclos de proliferação de pragas sem demandar intervenções químicas contínuas. Além disso, espécies específicas realizam a reposição natural de nitrogênio na terra, regenerando a microbiota local de forma limpa.",
+                prac_c3_title: "Manejo Biológico Integrado", prac_c3_desc: "Emprega bioinsumos e microrganismos protetores para regular ameaças de cultivo. Esta metodologia protege populações de polinizadores silvestres indispensáveis e diminui severamente a dependência de elementos químicos industriais de alta toxicidade.",
+                me_badge: "Autora do Projeto",
+                me_p1: "Estudante focada no campo das ciências exatas e no estudo aplicado da tecnologia. Tenho como convicção que o desenvolvimento de algoritmos estruturados e o raciocínio matemático lógico não devem se limitar a softwares abstratos, mas sim servir como alicerce real para mitigar complexidades urgentes da nossa sociedade e da preservação dos biomas.",
+                me_p2: "Este portal representa a convergência entre essas frentes: o uso da precisão informático-computacional direcionado à otimização ecológica, comprovando de forma clara que a inovação tecnológica e o respeito irrestrito ao equilíbrio botânico e à biodiversidade compõem a única via sustentável para o desenvolvimento social.",
+                foot_desc: "Desenvolvimento conceitual e analítico estruturado especificamente para a participação no Concurso Agrinho. Todas as informações bibliográficas e estatísticas estão em conformidade com as diretrizes da FAO/ONU e agências oficiais de pesquisa.",
+                foot_year: "Ano Base do Estudo: 2026"
+            },
+            en: {
+                top_banner: "SCIENTIFIC AND TECHNOLOGICAL PROJECT — 2026 AGRINHO CONTEST",
+                drawer_head: "Settings", lbl_lang: "Portal Language", lbl_theme: "Visual Theme",
+                btn_theme: "Toggle Light / Dark Mode", lbl_font: "Reading Scale",
+                nav_intro: "Introduction", nav_agrinho: "The Project", nav_hist: "History & Evolution",
+                nav_world: "Global Security", nav_sust: "Crop Practices", nav_quiz: "School Challenge",
+                nav_about_me: "About Me", quiz_title: "Agro-Environmental Knowledge Challenge",
+                quiz_subtitle: "Consolidate the main scientific concepts covered through an interactive testing interface.",
+                quiz_btn_next: "Next &rarr;", quiz_btn_start: "Start Interactive Challenge",
+                quiz_welcome_title: "Welcome to the AgroQuiz Module!",
+                quiz_welcome_desc: "Professional 5-step assessment designed to verify core knowledge about precision agriculture, water management, and UN ecological objectives.",
+                intro_title: "Strong Agriculture, Sustainable Future: Balance Between Production and Environment",
+                intro_p1: "Safely supplying a civilization approaching 10 billion people by mid-century, without compromising biomes and the planet's finite water reserves, is the greatest technical challenge in recent history. Field management requires analytical rigor, where technology directly supports environmental preservation.",
+                intro_p2: "Through integrated computational platforms and cutting-edge agronomic studies, contemporary agriculture stops being purely extractive and acts as a strategic ally of global biodiversity, optimizing land use and saving native forests.",
+                intro_sub_h2: "Resource Monitoring and Mitigated Environmental Impact",
+                intro_sub_p: "Below, examine the three core pillars that rule field modernization under the perspective of sustainability and exact sciences.",
+                card1_h3: "Geometric Soil Analysis", card1_p: "Precise mineral mapping identifies nutrient gaps in specific patches. This allows mathematical correction via geographical coordinates, stopping chemical leaching and keeping water reservoirs safe from unwanted contamination.",
+                card2_h3: "Optimized Water Governance", card2_p: "Advanced systems compute exact water volumes required at plant roots. This architecture sharply drops unneeded pumping, saving billions of liters of fresh water in the regional ecosystem.",
+                card3_h3: "Data Engineering in the Field", card3_p: "Continuous telemetry capture foresees climate changes and dangerous biological outbreaks. Data-driven decision-making avoids broad harmful chemical actions in the local environment.",
+                dive_intro_h4: "Technical Insights: The Role of Precision Algorithms",
+                dive_intro_p: "Mathematical modeling applied to modern agronomy runs complex nitrogen balance equations in the soil. By combining solar radiation index from leaves with historic rain metrics, professional systems stop logistical waste, proving clean code lowers air emissions.",
+                agr_title: "Sowing Knowledge, Reaping Future", agr_subtitle: "An initiative designed to transform eco-education and bridge academic science with everyday school life.",
+                agr_h3: "Critical Education and Scientific Thinking", agr_p1: "The Agrinho Program works as a driver of transformation by encouraging youth towards autonomous research. It breaks classroom theoretical boundaries, forcing a holistic view of global supply chains and complex ecological webs.",
+                agr_p2: "By blending biology, sustainability, and logic, the program prepares tomorrow's citizens to outline viable answers, respecting natural laws and global biodiversity balance.",
+                agr_quote: '"Consolidating environment-centered scientific learning provides the framework for next generations to rule the ecosystem with technical responsibility and balance."',
+                hist_title: "Historical Production Shift", hist_subtitle: "The path of civilizations: from absolute weather reliance to clean automated field control.",
+                time1_h3: "Empirical Phase: Primitive Subsistence", time1_p: "For millennia, farming depended entirely on heavy physical labor and random weather cycles. Chronic soil depletion caused weak yields and deep starvation crises that broke whole ancient societies.",
+                time2_h3: "20th Century: Structural Mechanization", time2_p: "The expansion of combustion engines and industrial inputs sharply boosted global volume per hectare. This shift pushed away famine loops across borders but created high soil degradation that must be fixed today.",
+                time3_h3: "Today: Agriculture 5.0 and Eco-Awareness", time3_p: "The modern framework joins clean bio-engineering, real-time satellite telemetry, and regenerative inputs. The goal is no longer clearing vital green forests to grow crops, but achieving supreme metric yields shielding native land.",
+                global_title: "Geopolitics and UN Frameworks", global_subtitle: "Global evidence and metrics detailed by the main international research and food protection agencies.",
+                global_h3: "Fighting Structural Food Waste", global_p1: "Official research papers published by the UN Food and Agriculture Organization (FAO) state that one-third of globally produced food is lost before reaching consumers due to bad storage or shipment. Fixing these supply bottlenecks avoids destroying untouched wild nature.",
+                global_p2: "In accordance with UN Sustainable Development Goals (SDGs), modern engineers utilize predictive analysis to construct crop variations resistant to heatwaves, securing harvests in arid zones cleanly.",
+                dive_global_h4: "Official FAO and Climate Panel Data",
+                dive_global_p: "UN reports warn that bad crop habits from the last century cost trillions to the global green economy. Moving into a data-driven sustainable architecture reduces agricultural pollution by 40%, meeting the Paris Agreement parameters cleanly.",
+                prac_title: "Technical Conservationist Management", prac_subtitle: "Validated strategies approved by world-class institutions like Embrapa for biological soil defense.",
+                prac_c1_title: "No-Till Farming Systems", prac_c1_desc: "Seeds are inserted without traditional plowing. Soil residue sheets left from previous crops shield fields from thermal wear, locking ideal humidity levels and capturing ground carbon permanently.",
+                prac_c2_title: "Structured Crop Rotation", prac_c2_desc: "Alternating plant families breaks insect and pest cycles naturally without demanding aggressive chemical items. Targeted crops handle organic nitrogen fixation, healing soil biology cleanly.",
+                prac_c3_title: "Integrated Biological Control", prac_c3_desc: "Employs modern eco-friendly inputs to buffer crops. This methodology shields crucial honeybees and wild insects, minimizing reliance on heavy hazardous industrial mixtures.",
+                me_badge: "Project Author",
+                me_p1: "Exact sciences student focused on modern computer software architectures and system engineering. I firmly believe data logic and mathematical computing should go beyond digital platforms to act as real-world ecological problem solvers.",
+                me_p2: "This interface embodies the balance between both tracks: using informatics to optimize nature conservation, proving that computational intelligence and biological respect compose the only secure path forward.",
+                foot_desc: "Conceptual and analytical web layout developed explicitly for the Agrinho Competition. Bibliographical records aligned with international FAO/UN databases.",
+                foot_year: "Base Year: 2026"
+            },
+            es: {
+                top_banner: "PROYECTO CIENTÍFICO Y TECNOLÓGICO — CONCURSO AGRINHO 2026",
+                drawer_head: "Preferencias", lbl_lang: "Idioma de Interfaz", lbl_theme: "Estilo Visual",
+                btn_theme: "Alternar Modo Claro / Escuro", lbl_font: "Escala de Lectura",
+                nav_intro: "Introducción", nav_agrinho: "El Proyecto", nav_hist: "Historia y Evolución",
+                nav_world: "Seguridad Mundial", nav_sust: "Prácticas de Cultivo", nav_quiz: "Reto Escolar",
+                nav_about_me: "Sobre Mí", quiz_title: "Reto del Saber Agroambiental",
+                quiz_subtitle: "Consolide los principales conceptos científicos abordados mediante una interfaz interactiva de evaluación.",
+                quiz_btn_next: "Avanzar &rarr;", quiz_btn_start: "Iniciar Desafío Interactivo",
+                quiz_welcome_title: "¡Bienvenido al Módulo AgroQuiz!",
+                quiz_welcome_desc: "Evaluación conceptual de 5 etapas diseñada para verificar competencias sobre agricultura de precisión, gestión del agua y objetivos ecológicos de la ONU.",
+                intro_title: "Agro Fuerte, Futuro Sostenible: Equilibrio Entre Producción y Medio Ambiente",
+                intro_p1: "Abastecer de forma segura a una población que alcanzará los 10 mil millones de habitantes a mediados de siglo, sin destruir los biomas y las reservas de agua dulce del planeta, es el mayor reto técnico de la historia actual. El manejo rural inteligente requiere rigor analítico, donde la tecnología defiende la ecología.",
+                intro_p2: "Mediante el uso de plataformas informáticas integradas y análisis agronómicos modernos, el sector rural deja atrás el viejo modelo puramente extractivo para actuar como un aliado clave de la biodiversidad global.",
+                intro_sub_h2: "Monitoreo Analítico e Impacto Mitigado",
+                intro_sub_p: "A continuación, examine los tres pilares de la modernización del campo bajo la perspectiva del desarrollo sostenible y las ciencias exactas.",
+                card1_h3: "Análisis Geométrico del Suelo", card1_p: "El mapeo mineral estratégico localiza deficiencias nutrientes en parcelas específicas. Esto facilita una corrección matemática por coordenadas geográficas, evitando la contaminación de acuíferos subterráneos.",
+                card2_h3: "Eficiencia Hídrica Optimizada", card2_p: "Algoritmos avanzados miden las necesidades hídricas en las raíces de las plantas. Esta tecnología frena el bombeo innecesario, salvando millones de litros de agua dulce en la región.",
+                card3_h3: "Ingeniería de Datos Rurales", card3_p: "La telemetría satelital continua anticipa cambios del clima y plagas destructivas. La toma de decisiones basada en datos informáticos elimina tratamientos químicos masivos perjudiciales.",
+                dive_intro_h4: "Análisis Técnico: El Rol de los Algoritmos de Precisión",
+                dive_intro_p: "El modelado informático aplicado al campo ejecuta ecuaciones matemáticas complejas de balance químico en la tierra. Al cruzar tasas de radiación de las hojas con métricas de lluvia, los sistemas profesionales mitigan pérdidas logísticas y reducen emisiones nocivas.",
+                agr_title: "Cultivando Saber, Cosechando Futuro", agr_subtitle: "Iniciativa estructurada para renovar la educación ambiental y conectar la ciencia con la vida escolar cotidiana.",
+                agr_h3: "Educación Crítica y Pensamiento Científico", agr_p1: "El Programa Agrinho funciona como un motor de cambio al motivar a la juventud hacia la investigación autónoma. Supera los límites teóricos del aula tradicional, enseñando la cadena de suministro internacional.",
+                agr_p2: "Al unir la biología, el desarrollo sostenible y el análisis lógico, preparamos a los estudiantes para diseñar respuestas viables que respeten la integridad de la naturaleza global.",
+                agr_quote: '"Estabilizar el aprendizaje científico ambiental provee las herramientas esenciales para que las nuevas generaciones lideren la tierra con total responsabilidad y ética."',
+                hist_title: "Evolución Histórica de la Producción", hist_subtitle: "El camino de las civilizaciones: de la dependencia climática absoluta al control digital limpio.",
+                time1_h3: "Fase Empírica: Subsistencia Primitiva", time1_p: "Durante siglos, los cultivos dependían del esfuerzo físico manual pesado y de ciclos del clima caóticos. La falta de nutrientes en la tierra causaba cosechas deficientes y hambrunas cíclicas que destruían imperios.",
+                time2_h3: "Siglo XX: Mecanización Estructural", time2_p: "La llegada de tractores avanzados e insumos químicos multiplicó la producción por hectárea en el mapa global. Esto frenó crisis históricas de alimentos pero generó una fuerte erosión que hoy urge corregir.",
+                time3_h3: "Hoy: Agricultura 5.0 y Conciencia Ecológica", time3_p: "El marco actual une bioingeniería, redes de satélites y bioinsumos orgánicos. El fin no es talar selvas nativas para ampliar terrenos, sino lograr rendimientos óptimos mediante algoritmos protegiendo la ecología.",
+                global_title: "Geopolítica y Directrices de la ONU", global_subtitle: "Datos y metas globales publicados por las agencias internacionales de investigación agroalimentaria.",
+                global_h3: "Combate al Desperdicio Logístico", global_p1: "Informes de la Organización de las Naciones Unidas para la Alimentación y la Agricultura (FAO) exponen que un tercio de la comida se pierde antes de llegar al consumidor por malas redes logísticas. Corregir esto evitaría la necesidad de desforestar bosques.",
+                global_p2: "Siguiendo los Objetivos de Desarrollo Sostenible (ODS) de la ONU, los ingenieros aplican análisis predictivo de datos para estructurar cultivos resistentes a sequías severas, estabilizando cosechas sin químicos dañinos.",
+                dive_global_h4: "Estadísticas Oficiais de la FAO y Acuerdos Climáticos",
+                dive_global_p: "Los documentos de la ONU alertan que el descuido de los suelos daña la economía verde mundial. Migrar hacia un modelo técnico sustentable baja las emisiones agrícolas en un 40%, cumpliendo con el Acuerdo de París de manera limpia.",
+                prac_title: "Técnicas de Manejo Conservacionista", prac_subtitle: "Estrategias validadas por centros de investigación como Embrapa para el resguardo de las tierras agrícolas.",
+                prac_c1_title: "Siembra Directa sobre Rastrojo", prac_c1_desc: "Los granos se siembran sin arar el suelo. La cobertura vegetal de la cosecha anterior actúa como un escudo térmico, reteniendo la humedad ideal y atrapando el carbono de forma permanente.",
+                prac_c2_title: "Rotación Planificada de Cultivos", prac_c2_desc: "Alternar familias botánicas detiene los ciclos biológicos de insectos perjudiciales de forma orgánica. Ciertos cultivos fijan nitrógeno en la tierra de manera limpia, sanando el ecosistema biológico local.",
+                prac_c3_title: "Control Biológico Integrado", prac_c3_desc: "Emplea microorganismos nativos y hongos benéficos para regular amenazas del ecosistema. Esto protege a las abejas y polinizadores silvestres, limitando los componentes químicos industriales.",
+                me_badge: "Autora del Proyecto",
+                me_p1: "Estudiante enfocada en el análisis matemático y las ciencias exactas. Sostengo la visión de que las líneas de código informático y la lógica formal deben traspasar las pantallas virtuales para dar soluciones a los problemas del ecosistema físico.",
+                me_p2: "Este portal demuestra la unión de ambos mundos: la informática avanzada orientada a la preservación natural, validando que el desarrollo inteligente y el respeto a las leyes ecológicas construyen el mañana.",
+                foot_desc: "Diseño web informativo estructurado rigurosamente para el Concurso Agrinho. Datos estadísticos validados según los parámetros oficiales de la FAO/ONU y entidades científicas.",
+                foot_year: "Año Base del Estudio: 2026"
+            }
+        };
+
+        // Quiz de 5 perguntas robustas e verídicas
+        const quizDataCorpus = [
+            { 
+                q_pt: "Qual prática conserva a cobertura vegetal da colheita anterior e evita o revolvimento do solo?", 
+                q_en: "Which methodology leaves organic crop residue on topsoil without tilling?",
+                q_es: "¿Qué técnica mantiene los residuos vegetales de la cosecha anterior sin arar la tierra?",
+                o_pt: ["Queima estrutural de resíduos", "Sistema de Plantio Direto na Palha", "Aração profunda intensiva"], 
+                o_en: ["Structural residue burning", "No-Till Farming System", "Intensive deep plowing"],
+                o_es: ["Quema estructural de residuos", "Sistema de Siembra Directa", "Arado profundo intensivo"],
+                c: 1, 
+                e_pt: "O Plantio Direto impede a erosão provocada pelas chuvas e mantém o carbono e a umidade natural retidos no solo.",
+                e_en: "No-Till protects soil from heavy rainfall erosion while sealing water carbon within the local ground.",
+                e_es: "La Siembra Directa evita la erosión hídrica y retiene de forma biológica el carbono dentro del suelo."
+            },
+            { 
+                q_pt: "De acordo com os dados apresentados da ONU/FAO, qual o percentual médio de desperdício global de alimentos na cadeia logística?", 
+                q_en: "According to official UN/FAO global records, what percentage of food is lost in logistical steps?",
+                q_es: "Según los datos oficiales de la ONU/FAO, ¿qué porcentaje de alimentos se pierde en los flujos logísticos?",
+                o_pt: ["Cerca de 5%", "Aproximadamente um terço (1/3)", "Mais de 80% devido ao clima"], 
+                o_en: ["Around 5% overall", "Approximately one-third (1/3)", "Over 80% due to global weather"],
+                o_es: ["Cerca del 5%", "Aproximadamente un tercio (1/3)", "Más del 80% por el clima"],
+                c: 1, 
+                e_pt: "A FAO confirma que 1/3 do alimento mundial se perde pós-colheita; solucionar isso poupa a abertura de novas fronteiras agrícolas.",
+                e_en: "FAO confirms 1/3 of global yield is lost post-harvest; solving this avoids clearing untouched natural biomes.",
+                e_es: "La FAO confirma que 1/3 de la producción mundial se pierde post-cosecha; corregir esto evita desforestar áreas nativas."
+            },
+            { 
+                q_pt: "Qual a função do Manejo Biológico Integrado utilizando bioinsumos?", 
+                q_en: "What is the primary technical function of deploying biological bio-inputs in crops?",
+                q_es: "¿Cuál es la función técnica del Manejo Biológico Integrado con bioinsumos?",
+                o_pt: ["Substituir totalmente a irrigação", "Regular pragas agrícolas resguardando polinizadores vitais", "Aumentar artificialmente o tamanho das folhas"], 
+                o_en: ["Replacing irrigation completely", "Targeting specific crop threats while protecting vital honeybees", "Artificially scaling biological plant leaf dimensions"],
+                o_es: ["Sustituir el riego por completo", "Regular plagas del cultivo protegiendo polinizadores vitales", "Aumentar artificialmente el tamaño de las hojas"],
+                c: 1, 
+                e_pt: "O uso de bioinsumos elimina ameaças específicas sem deixar toxicidade nos alimentos e sem agredir polinizadores vitais como as abelhas.",
+                e_en: "Bio-inputs safely clear targeted pests without spreading hazardous chemical particles or harming bees.",
+                e_es: "El uso de bioinsumos elimina insectos nocivos sin dejar residuos químicos y protegiendo a las abejas."
+            },
+            {
+                q_pt: "O que caracteriza a chamada 'Agricultura 5.0' no cenário atual?",
+                q_en: "What characterizes the so-called 'Agriculture 5.0' in the current framework?",
+                q_es: "¿Qué caracteriza a la llamada 'Agricultura 5.0' en el panorama actual?",
+                o_pt: ["Uso intensivo de tração animal", "Mecanização pesada sem controle de dados", "Integração de dados por satélite, IA e automação sustentável"],
+                o_en: ["Heavy animal traction dependency", "Mechanical automation without digital logic", "Satellite data integration, AI, and clean automated systems"],
+                o_es: ["Dependencia de tracción animal", "Mecanización pesada sin métricas", "Integración de datos satelitales, IA y automatización limpia"],
+                c: 2,
+                e_pt: "A Agricultura 5.0 foca na tomada de decisões cirúrgicas apoiadas por algoritmos e dados climatológicos em tempo real.",
+                e_en: "Agriculture 5.0 emphasizes mathematical field management via AI loops and geographic telemetry.",
+                e_es: "La Agricultura 5.0 une la inteligencia computacional con la botánica para maximizar rendimientos de forma verde."
+            },
+            {
+                q_pt: "Qual o benefício sistêmico da Rotação Estruturada de Culturas?",
+                q_en: "What is the systematic advantage of Structured Crop Rotation?",
+                q_es: "¿Cuál es la ventaja sistémica de la Rotación Planificada de Cultivos?",
+                o_pt: ["Erosão acelerada do terreno", "Quebra no ciclo de pragas e reposição natural de nutrientes", "Monocultura contínua da mesma espécie"],
+                o_en: ["Accelerated ground erosion", "Breaking pest reproduction timelines and chemical-free nitrogen updates", "Uninterrupted monoculture operations"],
+                o_es: ["Erosión acelerada de las tierras", "Ruptura de ciclos biológicos de plagas y fijación natural de nitrógeno", "Monocultivo continuo de la misma especie"],
+                c: 1,
+                e_pt: "Alternar famílias botânicas regenera a microbiota do solo e elimina a necessidade de defensivos sintéticos agressivos.",
+                e_en: "Alternating crop classes safely resets soil profiles and eliminates high industrial chemical dependency.",
+                e_es: "La alternancia de familias botánicas equilibra el perfil del suelo y evita el uso masivo de químicos."
+            }
+        ];
+
+        let activeQuizStep = 0, runningUserScore = 0, isStepAnswered = false, quizCurrentState = 'intro', currentStreak = 0;
+        let activeHistoricalYear = 2026;
+
+        // FUNÇÃO DE DADOS REAIS: Altera os dados baseando-se em relatórios e metas reais reais da Embrapa
+        function toggleHistoricalDataYear() {
+            const h1Val = document.getElementById('val-humidity');
+            const h1Bar = document.getElementById('bar-humidity');
+            const h2Val = document.getElementById('val-water');
+            const h2Bar = document.getElementById('bar-water');
+            
+            if (activeHistoricalYear === 2026) {
+                activeHistoricalYear = 2020;
+                // Balanço Histórico Real de 2020
+                h1Val.innerText = "13.9M ha";
+                h1Bar.style.width = "69%";
+                h2Val.innerText = "38%";
+                h2Bar.style.width = "38%";
+            } else {
+                activeHistoricalYear = 2026;
+                // Patamar e Metas do Plano ABC+ para 2026
+                h1Val.innerText = "17.4M ha";
+                h1Bar.style.width = "87%";
+                h2Val.innerText = "55%";
+                h2Bar.style.width = "55%";
+            }
+        }
+
+        const dashboardLocalizationCorpus = {
+            pt: { title: "Painel de Indicadores Históricos e Metas REAIS", sub: "Dados de produção e preservação validados por órgãos oficiais (Embrapa/IBGE/FAO).", btn: "Alternar Ano Balanço (2020 / 2026)", h1: "ÁREA INTEGRADA (ILPF)", h2: "CONTROLE BIOLÓGICO", h3: "DESPERDÍCIO DA CADEIA" },
+            en: { title: "Real Historical & Target Dashboard", sub: "Production and conservation metrics validated by official bureaus (Embrapa/IBGE/FAO).", btn: "Toggle Historical Year (2020 / 2026)", h1: "INTEGRATED LAND (ILPF)", h2: "BIOLOGICAL CONTROL", h3: "SUPPLY CHAIN WASTE" },
+            es: { title: "Panel de Indicadores Históricos y Metas REALES", sub: "Datos de producción y conservación validados por oficinas oficiales (Embrapa/IBGE/FAO).", btn: "Alternar Año de Balance (2020 / 2026)", h1: "ÁREA INTEGRADA (ILPF)", h2: "CONTROL BIOLÓGICO", h3: "DESPERDICIO LOGÍSTICO" }
+        };
+
+        window.addEventListener('scroll', () => {
+            const totalScrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+            if (totalScrollableHeight > 0) {
+                document.getElementById('reading-progress').style.width = (window.scrollY / totalScrollableHeight) * 100 + '%';
+            }
+        });
+
+        function executeTabSwitch(targetTabId) {
+            document.querySelectorAll('.tab-view-container').forEach(p => p.classList.remove('active-view-node'));
+            document.querySelectorAll('.tab-trigger-button').forEach(b => b.classList.remove('active-tab-node'));
+            
+            const targetView = document.getElementById(targetTabId);
+            const targetBtn = document.getElementById('btn-' + targetTabId);
+            
+            if(targetView) targetView.classList.add('active-view-node');
+            if(targetBtn) targetBtn.classList.add('active-tab-node');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function openAccessibilityDrawer() {
+            document.getElementById('accessibility-drawer').classList.add('is-visible');
+            document.getElementById('blur-overlay').style.display = 'block';
+        }
+        function closeAccessibilityDrawer() {
+            document.getElementById('accessibility-drawer').classList.remove('is-visible');
+            document.getElementById('blur-overlay').style.display = 'none';
+        }
+        function executeThemeToggle() {
+            const htmlNode = document.documentElement;
+            htmlNode.getAttribute('data-theme') === 'dark' ? htmlNode.removeAttribute('data-theme') : htmlNode.setAttribute('data-theme', 'dark');
+        }
+        function toggleImmersiveMode() {
+            document.body.classList.toggle('immersive-mode');
+            closeAccessibilityDrawer();
+        }
+
+        let activeScalePixels = 16;
+        function modifyTextScale(direction) {
+            activeScalePixels = Math.max(14, Math.min(22, activeScalePixels + direction));
+            document.documentElement.style.setProperty('--base-font-size', activeScalePixels + 'px');
+        }
+
+        function applyGlobalTranslation() {
+            const selectedLanguage = document.getElementById('locale-selector').value || 'pt';
+            document.querySelectorAll('[data-localize]').forEach(element => {
+                const translationKey = element.getAttribute('data-localize');
+                if (translationDictionary[selectedLanguage] && translationDictionary[selectedLanguage][translationKey]) {
+                    element.innerHTML = translationDictionary[selectedLanguage][translationKey];
+                }
+            });
+
+            // Atualizar os textos fixos do painel real conforme idioma
+            document.getElementById('dash-main-title').innerText = dashboardLocalizationCorpus[selectedLanguage].title;
+            document.getElementById('dash-sub-title').innerText = dashboardLocalizationCorpus[selectedLanguage].sub;
+            document.getElementById('dash-btn-text').innerText = dashboardLocalizationCorpus[selectedLanguage].btn;
+            document.getElementById('lbl-h1').innerText = dashboardLocalizationCorpus[selectedLanguage].h1;
+            document.getElementById('lbl-h2').innerText = dashboardLocalizationCorpus[selectedLanguage].h2;
+            document.getElementById('lbl-h3').innerText = dashboardLocalizationCorpus[selectedLanguage].h3;
+
+            if (quizCurrentState === 'intro') { renderQuizIntroState(); } 
+            else if (quizCurrentState === 'gameplay') { buildQuizStep(); } 
+            else if (quizCurrentState === 'result') { renderQuizResultState(); }
+        }
+
+        function initQuizComponent() {
+            quizCurrentState = 'intro'; activeQuizStep = 0; runningUserScore = 0; currentStreak = 0;
+            renderQuizIntroState();
+        }
+
+        function renderQuizIntroState() {
+            quizCurrentState = 'intro';
+            const lang = document.getElementById('locale-selector').value || 'pt';
+            const container = document.getElementById('quiz-box-wrapper');
+            container.innerHTML = `
+                <div style="text-align:center; padding: 20px 0;">
+                    <div style="font-size: 3rem; margin-bottom: 14px;">🏆</div>
+                    <h3 style="font-family: var(--font-display); font-size: 1.6rem; margin-bottom: 12px; color: var(--primary);">${translationDictionary[lang].quiz_welcome_title}</h3>
+                    <p style="color: var(--text-muted); font-size: 1rem; max-width: 550px; margin: 0 auto 24px auto;">${translationDictionary[lang].quiz_welcome_desc}</p>
+                    <button class="quiz-action-trigger" style="float: none; margin: 0 auto; display: inline-block;" onclick="startQuizEngine()">${translationDictionary[lang].quiz_btn_start}</button>
+                </div>`;
+        }
+
+        function startQuizEngine() {
+            quizCurrentState = 'gameplay'; activeQuizStep = 0; runningUserScore = 0; currentStreak = 0;
+            buildQuizStep();
+        }
+
+        function buildQuizStep() {
+            quizCurrentState = 'gameplay';
+            const lang = document.getElementById('locale-selector').value || 'pt';
+            const currentQuestionItem = quizDataCorpus[activeQuizStep];
+            const container = document.getElementById('quiz-box-wrapper');
+
+            let questionText = currentQuestionItem.q_pt;
+            let optionsArray = currentQuestionItem.o_pt;
+            if(lang === 'en') { questionText = currentQuestionItem.q_en; optionsArray = currentQuestionItem.o_en; }
+            if(lang === 'es') { questionText = currentQuestionItem.q_es; optionsArray = currentQuestionItem.o_es; }
+
+            const labelTracker = {
+                pt: `Questão ${activeQuizStep + 1} de ${quizDataCorpus.length}`,
+                en: `Question ${activeQuizStep + 1} of ${quizDataCorpus.length}`,
+                es: `Pregunta ${activeQuizStep + 1} de ${quizDataCorpus.length}`
+            };
+
+            container.innerHTML = `
+                <div>
+                    <div class="quiz-step-tracker">
+                        <span>${labelTracker[lang]}</span>
+                        <span class="quiz-streak-badge" id="streak-node">🔥 ACERTOS CONSECUTIVOS: x${currentStreak}</span>
+                    </div>
+                    <h3 class="quiz-core-question">${questionText}</h3>
+                    <div id="ui-quiz-options-box"></div>
+                    <div class="quiz-response-feedback" id="ui-quiz-feedback-box"></div>
+                    <button class="quiz-action-trigger" id="ui-quiz-next-btn" style="display:none;" onclick="triggerNextQuizStep()">${translationDictionary[lang].quiz_btn_next}</button>
+                    <div style="clear: both;"></div>
+                </div>`;
+
+            if(currentStreak >= 1) {
+                const streakBadge = document.getElementById('streak-node');
+                if(streakBadge) streakBadge.style.display = 'inline-block';
+            }
+
+            const optionsBox = document.getElementById('ui-quiz-options-box');
+            isStepAnswered = false;
+
+            optionsArray.forEach((optionText, optionIndex) => {
+                const optionButton = document.createElement('button');
+                optionButton.className = 'quiz-interactive-option';
+                optionButton.innerHTML = `<span><strong>${String.fromCharCode(65 + optionIndex)}</strong></span> ${optionText}`;
+                optionButton.onclick = () => verifyUserQuizChoice(optionIndex, optionButton);
+                optionsBox.appendChild(optionButton);
+            });
+        }
+
+        function verifyUserQuizChoice(chosenIndex, selectedButtonElement) {
+            if (isStepAnswered) return;
+            isStepAnswered = true;
+            
+            const lang = document.getElementById('locale-selector').value || 'pt';
+            const currentQuestionItem = quizDataCorpus[activeQuizStep];
+            const feedbackBox = document.getElementById('ui-quiz-feedback-box');
+            const allOptionButtons = document.querySelectorAll('.quiz-interactive-option');
+            
+            allOptionButtons.forEach(btn => btn.setAttribute('disabled', 'true'));
+            
+            let feedbackExplanation = currentQuestionItem.e_pt;
+            if(lang === 'en') feedbackExplanation = currentQuestionItem.e_en;
+            if(lang === 'es') feedbackExplanation = currentQuestionItem.e_es;
+
+            const labelCorrect = { pt: "Correto", en: "Correct", es: "Correcto" };
+            const labelWrong = { pt: "Incorreto", en: "Incorrect", es: "Incorrecto" };
+
+            if (chosenIndex === currentQuestionItem.c) {
+                selectedButtonElement.classList.add('node-correct');
+                feedbackBox.className = "quiz-response-feedback positive";
+                feedbackBox.innerHTML = `<strong>🎉 ${labelCorrect[lang]}:</strong> ${feedbackExplanation}`;
+                runningUserScore++;
+                currentStreak++;
+            } else {
+                selectedButtonElement.classList.add('node-wrong');
+                if(allOptionButtons[currentQuestionItem.c]) allOptionButtons[currentQuestionItem.c].classList.add('node-correct');
+                feedbackBox.className = "quiz-response-feedback negative";
+                feedbackBox.innerHTML = `<strong>❌ ${labelWrong[lang]}:</strong> ${feedbackExplanation}`;
+                currentStreak = 0;
+            }
+            
+            feedbackBox.style.display = 'block';
+            document.getElementById('ui-quiz-next-btn').style.display = 'block';
+        }
+
+        function triggerNextQuizStep() {
+            activeQuizStep++;
+            if (activeQuizStep < quizDataCorpus.length) { buildQuizStep(); } 
+            else { renderQuizResultState(); }
+        }
+
+        function renderQuizResultState() {
+            quizCurrentState = 'result';
+            const lang = document.getElementById('locale-selector').value || 'pt';
+            const container = document.getElementById('quiz-box-wrapper');
+            
+            let completionTitle = "Diagnóstico Concluído";
+            let feedbackMessage = `Módulo finalizado! Seu placar geral de acertos: <strong>${runningUserScore} de ${quizDataCorpus.length}</strong>.`;
+            let retryButtonText = "Reiniciar Desafio";
+
+            if(lang === 'en') {
+                completionTitle = "Challenge Complete";
+                feedbackMessage = `Module finalized! Your overall score: <strong>${runningUserScore} out of ${quizDataCorpus.length}</strong>.`;
+                retryButtonText = "Restart Challenge";
+            } else if(lang === 'es') {
+                completionTitle = "Desafío Concluido";
+                feedbackMessage = `¡Módulo finalizado! Tu puntuación: <strong>${runningUserScore} de ${quizDataCorpus.length}</strong>.`;
+                retryButtonText = "Reiniciar Desafío";
+            }
+
+            container.innerHTML = `
+                <div style="text-align: center; padding: 20px 0;">
+                    <div style="font-size: 3rem; margin-bottom: 14px;">🏁</div>
+                    <h3 style="font-family: var(--font-display); font-size: 1.8rem; margin-bottom: 12px; color: var(--primary);">${completionTitle}</h3>
+                    <p style="margin-bottom: 24px; color: var(--text-muted); font-size: 1rem; max-width:550px; margin-left:auto; margin-right:auto;">${feedbackMessage}</p>
+                    <button class="quiz-action-trigger" style="float: none; margin: 0 auto; display: inline-block;" onclick="initQuizComponent()">${retryButtonText}</button>
+                </div>`;
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            initQuizComponent();
+            applyGlobalTranslation();
+        });
+    </script>
+</body>
+</html>      
